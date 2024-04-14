@@ -1,4 +1,4 @@
-import { checkBounds, pixel } from './paint-bucket-tool';
+import { isOutOfBounds, pixel } from './paint-bucket-tool';
 
 describe('paint-bucket-tool', () => {
 	it('should return correct matrix for pixel(0,1), new color "o"', () => {
@@ -37,25 +37,25 @@ describe('paint-bucket-tool', () => {
 		expect(result).toEqual(correct);
 	});
 
-	it('should return false for checkBounds(matrix, 0, 0)', () => {
+	it('should return false for isOutOfBounds(matrix, 0, 0)', () => {
 		const matrix = [
 			['.', 'o', 'o', 'o', '.', '.'],
 			['.', 'o', '.', '.', '#', '.'],
 			['.', 'o', 'o', 'o', '.', '.'],
 			['.', 'o', '.', '.', '.', '.'],
 		];
-		const result = checkBounds(matrix, 0, 0);
+		const result = isOutOfBounds(matrix, 0, 0);
 		expect(result).toBe(false);
 	});
 
-	it('should return true for checkBounds(matrix, 100, 300)', () => {
+	it('should return true for isOutOfBounds(matrix, 100, 300)', () => {
 		const matrix = [
 			['.', 'o', 'o', 'o', '.', '.'],
 			['.', 'o', '.', '.', '#', '.'],
 			['.', 'o', 'o', 'o', '.', '.'],
 			['.', 'o', '.', '.', '.', '.'],
 		];
-		const result = checkBounds(matrix, 100, 300);
+		const result = isOutOfBounds(matrix, 100, 300);
 		expect(result).toBe(true);
 	});
 });

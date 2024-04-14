@@ -26,13 +26,14 @@ function getBaseMatrix() {
  * @param col - the column index to check
  * @returns false if the row and column are within bounds, true if the row or col is out of bounds
  */
-export function checkBounds(matrix: string[][], row: number, col: number) {
-	const isOutOfBounds = row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length;
-	return isOutOfBounds;
+export function isOutOfBounds(matrix: string[][], row: number, col: number) {
+	const result = row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length;
+	return result;
 }
 
 /**
  * paints a flood fill on a 2d matrix
+ * using DFS to traverse the matrix
  * @param matrix - the 2d matrix to paint on
  * @param row - the row index of the starting pixel
  * @param col - the column index of the starting pixel
@@ -50,8 +51,8 @@ type Paint = {
 };
 function paint({ matrix, row, col, currentColor, newColor, visited }: Paint) {
 	// -- base case
-	const isOutOfBounds = checkBounds(matrix, row, col);
-	if (isOutOfBounds) return;
+	const result = isOutOfBounds(matrix, row, col);
+	if (result) return;
 
 	const isColorDifferent = matrix[row][col] !== currentColor;
 	if (isColorDifferent) return;
@@ -65,7 +66,6 @@ function paint({ matrix, row, col, currentColor, newColor, visited }: Paint) {
 	matrix[row][col] = newColor;
 
 	for (let direction in directions) {
-		// -- DFS
 		const [x, y] = directions[direction];
 		paint({ matrix, row: row + x, col: col + y, currentColor, newColor, visited });
 	}
@@ -90,8 +90,8 @@ export function pixel(startPixel: Pixel, newColor: string) {
 	const { row, col } = startPixel;
 
 	// --edges
-	const isOutOfBounds = checkBounds(matrix, row, col);
-	if (isOutOfBounds) return;
+	const result = isOutOfBounds(matrix, row, col);
+	if (result) return;
 
 	const visited = new Set<string>();
 
